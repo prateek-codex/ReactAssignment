@@ -1,22 +1,18 @@
-
- import React from 'react';
-
+import React from 'react';
 require('./Tile.css');
-
 class Tile extends React.Component {
 	constructor(props) {
 		super(props);
-
 		this.state = {
 			open: false,
 			matched: false
 		};
 	}
-
 	componentWillReceiveProps(nextProps) {
-		this.setState({ open: nextProps.openedCharList.indexOf(this.state.character) > -1 || (nextProps.currentChar === this.state.character && nextProps.openKey == this.props.tileKey) });
+		this.setState({ open: nextProps.openedCharList.indexOf(this.state.character) > -1
+							  || (nextProps.currentChar === this.state.character
+							  && nextProps.openKey == this.props.tileKey) });
 	}
-
 	getCharacter() {
 		fetch('/api/getCharacter/' + this.props.apiDataId)
 			.then((response) => response.json())
@@ -30,18 +26,14 @@ class Tile extends React.Component {
 		var open = this.props.openedCharList.indexOf(this.state.character) > -1;
 		this.setState({ open: open});
 	}
-
 	componentDidMount() {
 		this.getCharacter();
 	}
-
   handleClick(index) {
 	  var state = !this.state.open;
 	  this.setState({open : state});
 	  this.setState({clicked : state});
-
 		var self = this;
-
 		setTimeout(function() {
 			if(state) {
 				self.props.onClick(self.state.character, self.props.tileKey);
@@ -52,7 +44,6 @@ class Tile extends React.Component {
 			}
 		}, 200);
 	}
-
 	render() {
 		return (
 			<div className={this.state.open ? "tile tile-open" : "tile tile-close"} onClick={this.handleClick.bind(this)}>
@@ -61,5 +52,4 @@ class Tile extends React.Component {
 		);
 	}
 }
-
 export default Tile;
