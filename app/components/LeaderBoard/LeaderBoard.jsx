@@ -28,7 +28,9 @@ class LeaderBoard extends React.Component {
 	}
 
 	componentWillReceiveProps (newProps) {
-		this.setState({ leaderBoardList: newProps.leaderBoardList });
+		if(newProps.leaderBoardList && newProps.leaderBoardList.length) {
+			this.setState({ leaderBoardList: newProps.leaderBoardList });
+		}
 	}
 
 	render() {
@@ -45,7 +47,7 @@ class LeaderBoard extends React.Component {
 				<div className="col-md-12"><h3>LeaderBoard</h3></div>
 
 				{
-					this.state.leaderBoardList && this.state.leaderBoardList.length &&
+					this.state.leaderBoardList && this.state.leaderBoardList.length > 0 &&
 					<table className="table table-bordered">
 						<thead>
 							<tr>
