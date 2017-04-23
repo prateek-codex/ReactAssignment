@@ -3,6 +3,7 @@ import React from 'react';
 require('./App.css');
 import Board from '../Board/Board';
 import WinDialog from '../WinDialog/WinDialog';
+import Header from '../Header/Header';
 
 class App extends React.Component {
 	constructor(props) {
@@ -10,11 +11,14 @@ class App extends React.Component {
 
 		this.state = {
 			time: new Date(),
-			gameState: 'started'
+			gameState: 'started',
+			moves:0
 		};
 
 		this.timer = null;
 		this.gameWon = this.gameWon.bind(this);
+		this.newGameHandler = this.newGameHandler.bind(this);
+		this.moveHandler = this.moveHandler.bind(this);
 	}
 
 	initializeList() {
@@ -50,18 +54,55 @@ class App extends React.Component {
 		});	
     }
 
+	newGameHandler() {
+		this.setState(function (state, props) {
+				return {
+					moves: 0
+				}
+			});
+			
+		this.setState(function (state, props) {
+			return {
+				gameState: 'new'
+			}
+		});	
+
+		var self = this;
+
+		setTimeout(function(){
+			
+			self.setState(function (state, props) {
+				return {
+					gameState: 'started'
+				}
+				});	
+		}, 100);
+		
+		this.initializeList();
+	}
+
+	moveHandler() {
+
+		var moveCount = ++this.state.moves;
+		this.setState(function (state, props) {
+				return {
+					moves: moveCount
+				}
+			});
+	}
+
 	render() {
 		return (
 			<div>
 			<div><h1>Remember the Alphabet Game</h1></div>
-			
-			<div><h1>Remember the Alphabet Game</h1></div>
+			<div><Header newGame = {this.newGameHandler} moves={this.state.moves}/> </div>
 			{
 				this.state.gameState === 'started' && 
 				<div>
 					{
 						this.state.apiDataId &&
-						<Board dimensions = {{rows: 2, columns: 6}} apiDataId = {this.state.apiDataId} onWin = {this.gameWon}/>
+						<Board dimensions = {{rows: 2, columns: 6}} apiDataId = {this.state.apiDataId} onWin = {this.gameWon}
+						move = {this.moveHandler}/>
 					}
 				</div>
 			}

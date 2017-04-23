@@ -39,6 +39,8 @@ class Board extends React.Component {
 
     clickHandler(char, tileKey) {
 		
+		this.props.move();
+		
 		if(!this.state.currentChar) {
 			this.setState(function (state, props) {
 				return {
