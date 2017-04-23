@@ -4,12 +4,13 @@ import Board from '../Board/Board';
 import WinDialog from '../WinDialog/WinDialog';
 import Header from '../Header/Header';
 import LeaderBoard from '../LeaderBoard/LeaderBoard';
+import Constants from '../../Lib/Constants'
 
 class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			gameState: 'started',
+			gameState: Constants.GAME_STATE_STARTED,
 			moves: 0
 		};
 		this.gameCompleted = this.gameCompleted.bind(this);
@@ -18,7 +19,7 @@ class App extends React.Component {
     	this.handleNameChage = this.handleNameChage.bind(this);
 	}
 	initializeList() {
-		return fetch('/api/initialize')
+		return fetch(Constants.API_ENDPOINT_INITIALIZE)
 			.then((response) => response.json())
 			.then((responseJson) => {
 				this.setState(function (state, props) {
@@ -37,11 +38,11 @@ class App extends React.Component {
 	gameCompleted() {
 		this.setState(function (state, props) {
 			return {
-				gameState: 'ended'
+				gameState: Constants.GAME_STATE_ENDED
 			}
 		});
-		fetch('/api/leaderboard', {
-			method: 'POST',
+		fetch(Constants.API_ENDPOINT_LEADERBOARD, {
+			method: Constants.HTTP_POST_METHOD,
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
@@ -66,13 +67,13 @@ class App extends React.Component {
 		});
 		this.setState(function (state, props) {
 			return {
-				gameState: 'new'
+				gameState: Constants.GAME_STATE_NEW
 			}
 		});
 		setTimeout(function () {
 			self.setState(function (state, props) {
 				return {
-					gameState: 'started'
+					gameState: Constants.GAME_STATE_STARTED
 				}
 			});
 		}, 100, this);
@@ -98,7 +99,7 @@ class App extends React.Component {
 							 nameChange= {this.handleNameChage} />
 				</div>
 				{
-					this.state.gameState === 'started' &&
+					this.state.gameState === Constants.GAME_STATE_STARTED &&
 					<div>
 						{
 							this.state.apiDataId &&
@@ -110,7 +111,7 @@ class App extends React.Component {
 					</div>
 				}
 				{
-					this.state.gameState === 'ended' &&
+					this.state.gameState === Constants.GAME_STATE_ENDED &&
 					<WinDialog />
 				}
 				<LeaderBoard leaderBoardList = {this.state.leaderBoardList} />

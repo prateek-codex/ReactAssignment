@@ -1,7 +1,7 @@
 const Hapi = require('hapi');
 const https = require('https');
 const serverName = 'https://10.127.128.56:8000';
-var leaderboard = require('./leaderboard.js')
+let leaderboard = require('./leaderboard.js')
 
 // Create a server with a host and port
 const server = new Hapi.Server();
@@ -98,8 +98,8 @@ server.route({
 server.route([{
 	method: 'GET',
 	path: '/leaderboard',
-	handler: (request, reply) =>  { 
-		reply(leaderboard.GetLeaderBoard()) 
+	handler: (request, reply) =>  {
+		reply(leaderboard.GetLeaderBoard())
 	}
 }]),
 
