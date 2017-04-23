@@ -1,5 +1,6 @@
-
 import React from 'react';
+import Constants from '../../Lib/Constants'
+
 class LeaderBoard extends React.Component {
 	constructor(props) {
 		super(props);
@@ -7,7 +8,7 @@ class LeaderBoard extends React.Component {
 		};
 	}
 	fetchLeaderboard() {
-		fetch('/api/leaderboard')
+		fetch(Constants.API_ENDPOINT_LEADERBOARD)
 			.then((response) => response.json())
 			.then((responseJson) => {
 				this.setState({ leaderBoardList: responseJson });
