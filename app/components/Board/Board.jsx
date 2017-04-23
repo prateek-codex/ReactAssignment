@@ -59,6 +59,10 @@ class Board extends React.Component {
 						openedCharList: openedChars
 					}
 				});	
+
+				if(this.state.openedCharList.length === 6) {
+					this.props.onWin();
+				}
 			}
 			else {
 				// Not matched, close both
@@ -109,7 +113,7 @@ class Board extends React.Component {
 		return (
 			<div>
 			{
-				this.state.apiShuffleDataId &&
+				this.state.apiShuffleDataId && !this.state.ended &&
 				<div>
 				{	
 					tileRows.map(function(tileRow, i){

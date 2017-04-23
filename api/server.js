@@ -34,7 +34,6 @@ server.register(require('inert'), (err) => {
 		method: 'GET',
 		path: '/hello',
 		handler: function (request, reply) {
-			console.log("ARSaqfr")
 			reply.file('../app/index.html');
 		}
 	});

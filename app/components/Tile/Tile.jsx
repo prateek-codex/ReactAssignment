@@ -11,7 +11,6 @@ class Tile extends React.Component {
 			open: false,
 			matched: false
 		};
-
 	}
 	
 	componentWillReceiveProps(nextProps) {
