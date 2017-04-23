@@ -22,7 +22,7 @@ class App extends React.Component {
 	}
 
 	initializeList() {
-		return fetch('https://10.127.128.56:8000/alphabets/getchars/6')
+		return fetch('/api/initialize')
 			.then((response) => response.json())
 			.then((responseJson) => {
 				// this.setState({apiDataId: responseJson.id});
@@ -51,7 +51,7 @@ class App extends React.Component {
 			return {
 				gameState: 'ended'
 			}
-		});	
+		});
     }
 
 	newGameHandler() {
@@ -60,24 +60,24 @@ class App extends React.Component {
 					moves: 0
 				}
 			});
-			
+
 		this.setState(function (state, props) {
 			return {
 				gameState: 'new'
 			}
-		});	
+		});
 
 		var self = this;
 
 		setTimeout(function(){
-			
+
 			self.setState(function (state, props) {
 				return {
 					gameState: 'started'
 				}
-				});	
+				});
 		}, 100);
-		
+
 		this.initializeList();
 	}
 
@@ -96,7 +96,7 @@ class App extends React.Component {
 			<div className="container">
 			<div><Header newGame = {this.newGameHandler} moves={this.state.moves}/> </div>
 			{
-				this.state.gameState === 'started' && 
+				this.state.gameState === 'started' &&
 				<div>
 					{
 						this.state.apiDataId &&

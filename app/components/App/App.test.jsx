@@ -8,6 +8,6 @@ describe('App.jsx', () => {
 	it('should include "Hello World" heading', () => {
 		const app = shallow(<App />);
 
-		expect(app.contains(<h1>Hello World</h1>)).toEqual(true);
+		expect(app.contains(<h1>Remember the Alphabet Game</h1>)).toEqual(true);
 	});
 });
