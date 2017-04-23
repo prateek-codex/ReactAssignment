@@ -1,6 +1,6 @@
 const Hapi = require('hapi');
 const https = require('https');
-const serverName = 'https://10.127.128.56:8000';
+const Constants = require('./constants');
 let leaderboard = require('./leaderboard.js')
 
 // Create a server with a host and port
@@ -19,15 +19,15 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
 // Add the route
 server.route([{
-	method: 'GET',
+	method: Constants.HTTP_GET_METHOD,
 	path: '/',
 	handler: (request, reply) => reply('Nothing to see here'),
 },
 {
-	method: 'GET',
-	path: '/initialize',
+	method: Constants.HTTP_GET_METHOD,
+	path: Constants.API_ENDPOINT_INITIALIZE,
 	handler: (request, reply) => {
-		https.get(serverName + '/alphabets/getchars/6', (res) => {
+		https.get(Constants.EXTERNAL_API_SERVER_NAME + Constants.EXTERNAL_API_GETCHARS, (res) => {
 			let rawData = '';
 			res.on('data', (chunk) => { rawData += chunk; });
 			res.on('end', () => {
@@ -43,11 +43,11 @@ server.route([{
 	},
 },
 {
-	method: 'GET',
-	path: '/shuffle/{query}',
+	method: Constants.HTTP_GET_METHOD,
+	path: Constants.API_ENDPOINT_SHUFFLE,
 	handler: (request, reply) => {
 		let params = request.params.query
-		https.get(serverName + '/alphabets/shuffle/' + params, (res) => {
+		https.get(Constants.EXTERNAL_API_SERVER_NAME + Constants.EXTERNAL_API_SHUFFLE + params, (res) => {
 			let rawData = '';
 			res.on('data', (chunk) => { rawData += chunk; });
 			res.on('end', () => {
@@ -63,11 +63,11 @@ server.route([{
 	},
 },
 {
-	method: 'GET',
+	method: Constants.HTTP_GET_METHOD,
 	path: '/getCharacter/{query}',
 	handler: (request, reply) => {
 		let params = request.params.query
-		https.get(serverName + '/alphabets/get/' + params + '/1', (res) => {
+		https.get(Constants.EXTERNAL_API_SERVER_NAME + Constants.EXTERNAL_API_ALPHABETS + params + '/1', (res) => {
 			let rawData = '';
 			res.on('data', (chunk) => { rawData += chunk; });
 			res.on('end', () => {
@@ -87,98 +87,10 @@ server.route([{
 ]);
 
 server.route({
-    method: ['POST'],
-    path: '/leaderboard',
+    method: [Constants.HTTP_POST_METHOD],
+    path: Constants.API_ENDPOINT_LEADERBOARD,
     handler: function (request, reply) {
 		leaderboard.UpdateLeaderBoard(request.payload.name)
         reply(leaderboard.GetLeaderBoard());
     }
 });
-
-/**
- * @swagger
- * definition:
- *   Puppy:
- *     properties:
- *       name:
- *         type: string
- *       breed:
- *         type: string
- *       age:
- *         type: integer
- *       sex:
- *         type: string
- */
-/**
- * @swagger
- * /api/puppies:
- *   get:
- *     tags:
- *       - Puppies
- *     description: Returns all puppies
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: An array of puppies
- *         schema:
- *           $ref: '#/definitions/Puppy'
- */
-server.route([{
-	method: 'GET',
-	path: '/leaderboard',
-	handler: (request, reply) =>  {
-		reply(leaderboard.GetLeaderBoard())
-	}
-}]),
-
-// Start the server
-server.start((err) => {
-	if (err) {
-		throw err;
-	}
-
-	console.log('Server running at:', server.info.uri);
-});
-
-// Swagger
-var swaggerJSDoc = require('swagger-jsdoc');
-
-// swagger definition
-var swaggerDefinition = {
-  info: {
-    title: 'Node Swagger API',
-    version: '1.0.0',
-    description: 'Demonstrating how to describe a RESTful API with Swagger',
-  },
-  host: 'localhost:8000',
-  basePath: '/',
-};
-
-// serve swagger
-server.route([{
-	method: 'GET',
-	path: '/swagger',
-	handler: (request, reply) =>  {
-		reply(swaggerSpec)
-	}
-}])
-
-// options for the swagger docs
-var options = {
-  // import swaggerDefinitions
-  swaggerDefinition: swaggerDefinition,
-  // path to the API docs
-  apis: ['./routes/*.js'],
-};
-
-// initialize swagger-jsdoc
-var swaggerSpec = swaggerJSDoc(options);
-
-server.route({
-        method: 'GET',
-        path: '/api-docs',
-        handler: function (request, reply) {
-            reply.file('./public/api-docs/index.html');
-        }
-    });
