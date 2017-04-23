@@ -93,8 +93,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div>
-			<div><h1>Remember the Alphabet Game</h1></div>
+			<div className="container">
 			<div><Header newGame = {this.newGameHandler} moves={this.state.moves}/> </div>
 			{
 				this.state.gameState === 'started' && 
