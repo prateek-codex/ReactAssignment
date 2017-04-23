@@ -1,3 +1,10 @@
+
+How to start the game:
+    1. Open command prompt, Enter command "npm start"
+    2. visit "https://localhost:8080"
+    3. Enter your name, and start playing.
+    4. After each win, leader board will be updated
+
 Game rules:
 1.	Mix up alphabets
 2.	Place them on a 2x6 rows
@@ -7,14 +14,9 @@ Game rules:
 6.	Remember which alphabet was where
 7.	Game over when all cards match and taken off the rows
 
-How to start the game:
-    1. Open command prompt, Enter command "npm start"
-    2. visit "https://localhost:8080"
-    3. Enter your name, and start playing.
-    4. After each win, leader board will be updated
-
 Top Level Structure
     1. Server (Node JS) - Using Hapi
+        Test cases: Jasmine-node
     2. Client (React based)
             Bundling (Webpack)
             Components (Tiles, board, App, header, leader board etc.)
