@@ -20,8 +20,8 @@ class LeaderBoard extends React.Component {
 	componentWillMount() {
 		this.fetchLeaderboard();
 	}
-	componentWillReceiveProps (newProps) {
-		if(newProps.leaderBoardList && newProps.leaderBoardList.length) {
+	componentWillReceiveProps(newProps) {
+		if (newProps.leaderBoardList && newProps.leaderBoardList.length) {
 			this.setState({ leaderBoardList: newProps.leaderBoardList });
 		}
 	}

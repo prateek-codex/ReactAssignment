@@ -1,5 +1,5 @@
-
 import React from 'react';
+
 require('./WinDialog.css');
 class WinDialog extends React.Component {
 	constructor(props) {
