@@ -95,6 +95,35 @@ server.route({
     }
 });
 
+/**
+ * @swagger
+ * definition:
+ *   Puppy:
+ *     properties:
+ *       name:
+ *         type: string
+ *       breed:
+ *         type: string
+ *       age:
+ *         type: integer
+ *       sex:
+ *         type: string
+ */
+/**
+ * @swagger
+ * /api/puppies:
+ *   get:
+ *     tags:
+ *       - Puppies
+ *     description: Returns all puppies
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of puppies
+ *         schema:
+ *           $ref: '#/definitions/Puppy'
+ */
 server.route([{
 	method: 'GET',
 	path: '/leaderboard',
@@ -111,3 +140,45 @@ server.start((err) => {
 
 	console.log('Server running at:', server.info.uri);
 });
+
+// Swagger
+var swaggerJSDoc = require('swagger-jsdoc');
+
+// swagger definition
+var swaggerDefinition = {
+  info: {
+    title: 'Node Swagger API',
+    version: '1.0.0',
+    description: 'Demonstrating how to describe a RESTful API with Swagger',
+  },
+  host: 'localhost:8000',
+  basePath: '/',
+};
+
+// serve swagger
+server.route([{
+	method: 'GET',
+	path: '/swagger',
+	handler: (request, reply) =>  {
+		reply(swaggerSpec)
+	}
+}])
+
+// options for the swagger docs
+var options = {
+  // import swaggerDefinitions
+  swaggerDefinition: swaggerDefinition,
+  // path to the API docs
+  apis: ['./routes/*.js'],
+};
+
+// initialize swagger-jsdoc
+var swaggerSpec = swaggerJSDoc(options);
+
+server.route({
+        method: 'GET',
+        path: '/api-docs',
+        handler: function (request, reply) {
+            reply.file('./public/api-docs/index.html');
+        }
+    });

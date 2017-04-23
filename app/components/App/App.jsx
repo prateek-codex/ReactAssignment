@@ -16,7 +16,7 @@ class App extends React.Component {
 		this.gameCompleted = this.gameCompleted.bind(this);
 		this.newGameHandler = this.newGameHandler.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
-    	this.handleNameChage = this.handleNameChage.bind(this);
+		this.handleNameChage = this.handleNameChage.bind(this);
 	}
 	initializeList() {
 		return fetch(Constants.API_ENDPOINT_INITIALIZE)
@@ -44,16 +44,20 @@ class App extends React.Component {
 		fetch(Constants.API_ENDPOINT_LEADERBOARD, {
 			method: Constants.HTTP_POST_METHOD,
 			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
+				'Accept': Constants.HTTP_APPLICATION_TYPE_JSON,
+				'Content-Type': Constants.HTTP_APPLICATION_TYPE_JSON,
 			},
 			body: JSON.stringify({
 				name: this.state.name
-				})
 			})
+		})
 			.then((response) => response.json())
 			.then((responseJson) => {
-				this.setState({leaderBoardList: responseJson});
+				this.setState(function (state, props) {
+					return {
+						leaderBoardList: responseJson
+					}
+				});
 			})
 			.catch((error) => {
 				console.error(error);
@@ -80,10 +84,10 @@ class App extends React.Component {
 		this.initializeList();
 	}
 	handleNameChage(event) {
-    	this.setState({name: event.target.value});
-  	}
+		this.setState({ name: event.target.value });
+	}
 	moveHandler() {
-		var moveCount = ++this.state.moves;
+		let moveCount = ++this.state.moves;
 		this.setState(function (state, props) {
 			return {
 				moves: moveCount
@@ -95,8 +99,8 @@ class App extends React.Component {
 			<div className="container">
 				<div>
 					<Header newGame={this.newGameHandler}
-							 moves={this.state.moves}
-							 nameChange= {this.handleNameChage} />
+						moves={this.state.moves}
+						nameChange={this.handleNameChage} />
 				</div>
 				{
 					this.state.gameState === Constants.GAME_STATE_STARTED &&
@@ -104,9 +108,9 @@ class App extends React.Component {
 						{
 							this.state.apiDataId &&
 							<Board dimensions={{ rows: 2, columns: 6 }}
-								   apiDataId={this.state.apiDataId}
-								   onWin={this.gameCompleted}
-								   move={this.moveHandler} />
+								apiDataId={this.state.apiDataId}
+								onWin={this.gameCompleted}
+								move={this.moveHandler} />
 						}
 					</div>
 				}
@@ -114,7 +118,7 @@ class App extends React.Component {
 					this.state.gameState === Constants.GAME_STATE_ENDED &&
 					<WinDialog />
 				}
-				<LeaderBoard leaderBoardList = {this.state.leaderBoardList} />
+				<LeaderBoard leaderBoardList={this.state.leaderBoardList} />
 			</div>
 		);
 	}

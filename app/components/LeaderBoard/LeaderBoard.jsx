@@ -11,7 +11,11 @@ class LeaderBoard extends React.Component {
 		fetch(Constants.API_ENDPOINT_LEADERBOARD)
 			.then((response) => response.json())
 			.then((responseJson) => {
-				this.setState({ leaderBoardList: responseJson });
+				this.setState(function (state, props) {
+					return {
+						leaderBoardList: responseJson
+					}
+				});
 			})
 			.catch((error) => {
 				console.error(error);
@@ -20,15 +24,19 @@ class LeaderBoard extends React.Component {
 	componentWillMount() {
 		this.fetchLeaderboard();
 	}
-	componentWillReceiveProps (newProps) {
-		if(newProps.leaderBoardList && newProps.leaderBoardList.length) {
-			this.setState({ leaderBoardList: newProps.leaderBoardList });
+	componentWillReceiveProps(newProps) {
+		if (newProps.leaderBoardList && newProps.leaderBoardList.length) {
+			this.setState(function (state, props) {
+				return {
+					leaderBoardList: newProps.leaderBoardList
+				}
+			});
 		}
 	}
 	render() {
-		var list = [];
+		let list = [], i;
 		if (this.state.leaderBoardList) {
-			for (var i = 0; i < this.state.leaderBoardList.length; i++) {
+			for (i = 0; i < this.state.leaderBoardList.length; i++) {
 				list.push(<tr><th>{this.state.leaderBoardList[i].SNo}</th><th>{this.state.leaderBoardList[i].Name}</th><th>{this.state.leaderBoardList[i].WinCount}</th></tr>);
 			}
 		}

@@ -3,7 +3,6 @@ import Tile from '../Tile/Tile';
 import Constants from '../../Lib/Constants'
 require('./Board.css');
 
-
 class Board extends React.Component {
 	constructor(props) {
 		super(props);
@@ -13,13 +12,17 @@ class Board extends React.Component {
 			currentChar: null,
 			openedCharList: []
 		};
-    this.clickHandler = this.clickHandler.bind(this);
+		this.clickHandler = this.clickHandler.bind(this);
 	}
 	shuffleBoard() {
 		fetch(Constants.API_ENDPOINT_SHUFFLE + this.props.apiDataId)
 			.then((response) => response.json())
 			.then((responseJson) => {
-				this.setState({apiShuffleDataId: responseJson.id});
+				this.setState(function (state, props) {
+					return {
+						apiShuffleDataId: responseJson.id,
+					}
+				});
 			})
 			.catch((error) => {
 				console.error(error);
@@ -28,9 +31,9 @@ class Board extends React.Component {
 	componentWillMount() {
 		this.shuffleBoard();
 	}
-    clickHandler(char, tileKey) {
+	clickHandler(char, tileKey) {
 		this.props.move();
-		if(!this.state.currentChar) {
+		if (!this.state.currentChar) {
 			this.setState(function (state, props) {
 				return {
 					currentChar: char,
@@ -38,18 +41,17 @@ class Board extends React.Component {
 				}
 			});
 		}
-		else
-		{
-			if(this.state.currentChar == char){
+		else {
+			if (this.state.currentChar == char) {
 				// Matched, keep both open
-				var openedChars = this.state.openedCharList;
+				let openedChars = this.state.openedCharList;
 				openedChars.push(char);
 				this.setState(function (state, props) {
 					return {
 						openedCharList: openedChars
 					}
 				});
-				if(this.state.openedCharList.length === 6) {
+				if (this.state.openedCharList.length === 6) {
 					this.props.onWin();
 				}
 			}
@@ -59,34 +61,33 @@ class Board extends React.Component {
 				}
 			});
 		}
-    }
+	}
 	render() {
-		var tileRows = [];
-		var self = this;
-		for(var i=0; i<this.props.dimensions.rows; i++){
-			var tiles = [];
-			for(var j=0; j<this.props.dimensions.columns; j++) {
+		let tileRows = [], tiles = [], i, j;
+		for (i = 0; i < this.props.dimensions.rows; i++) {
+			tiles = [];
+			for (j = 0; j < this.props.dimensions.columns; j++) {
 				tiles.push(<Tile tileKey={i + '' + j}
-								 apiDataId= {i == 0 ? this.state.apiDataId : this.state.apiShuffleDataId}
-								 onClick = {this.clickHandler}
-								 openedCharList={this.state.openedCharList}
-								 currentChar={this.state.currentChar}
-								 openKey = {this.state.openKey} />);
+					apiDataId={i == 0 ? this.state.apiDataId : this.state.apiShuffleDataId}
+					onClick={this.clickHandler}
+					openedCharList={this.state.openedCharList}
+					currentChar={this.state.currentChar}
+					openKey={this.state.openKey} />);
 			}
 			tileRows.push(tiles);
 		}
 		return (
 			<div>
-			{
-				this.state.apiShuffleDataId && !this.state.ended &&
-				<div>
 				{
-					tileRows.map(function(tileRow, i){
-						return <div className= "tile-row" > {tileRow} </div>;
-					}, this)
+					this.state.apiShuffleDataId && !this.state.ended &&
+					<div>
+						{
+							tileRows.map(function (tileRow, i) {
+								return <div className="tile-row" > {tileRow} </div>;
+							}, this)
+						}
+					</div>
 				}
-				</div>
-			}
 			</div>
 		);
 	}

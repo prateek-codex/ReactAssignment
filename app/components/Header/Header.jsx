@@ -5,11 +5,11 @@ class Header extends React.Component {
 		this.state = {
 			name: undefined
 		};
-    	this.handleNameChage = this.handleNameChage.bind(this);
+		this.handleNameChage = this.handleNameChage.bind(this);
 	}
-	 handleNameChage(event) {
-		 this.props.nameChange(event);
-  	}
+	handleNameChage(event) {
+		this.props.nameChange(event);
+	}
 	render() {
 		return (
 			<div className="jumbotron">

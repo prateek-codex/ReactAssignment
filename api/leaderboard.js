@@ -1,6 +1,6 @@
 
 
-var LeaderBoard = {};
+let LeaderBoard = {};
 
 // SNo, Name, WinCount
 LeaderBoard.Data = [];
@@ -9,11 +9,10 @@ LeaderBoard.GetLeaderBoard = function() {
     return LeaderBoard.Data;
 }
 
-LeaderBoard.UpdateLeaderBoard = function(name) {    
-    var position = -1;
+LeaderBoard.UpdateLeaderBoard = function(name) {
+    let position = -1, i;
     name = name ? name : 'Anonymous';
-
-    for(var i=0; i<LeaderBoard.Data.length; i++) {
+    for(i=0; i<LeaderBoard.Data.length; i++) {
         if(LeaderBoard.Data[i].Name.toLowerCase() === name.toLowerCase()) {
             position = i;
             break;
