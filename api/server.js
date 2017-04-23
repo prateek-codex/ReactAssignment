@@ -60,6 +60,26 @@ server.route([{
 			});
 		});
 	},
+},
+{
+	method: 'GET',
+	path: '/getCharacter/{query}',
+	handler: (request, reply) => {
+		let params = request.params.query
+		https.get(serverName + '/alphabets/get/' + params + '/1', (res) => {
+			let rawData = '';
+			res.on('data', (chunk) => { rawData += chunk; });
+			res.on('end', () => {
+				try {
+					const parsedData = JSON.parse(rawData);
+					reply(parsedData);
+				} catch (e) {
+					console.error(e.message);
+					reply('');
+				}
+			});
+		});
+	},
 }
 
 
