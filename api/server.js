@@ -1,5 +1,6 @@
 const Hapi = require('hapi');
 const https = require('https');
+const serverName = 'https://10.127.128.56:8000';
 var leaderboard = require('./leaderboard.js')
 
 // Create a server with a host and port
@@ -26,7 +27,7 @@ server.route([{
 	method: 'GET',
 	path: '/initialize',
 	handler: (request, reply) => {
-		https.get('https://10.127.128.56:8000/alphabets/getchars/6', (res) => {
+		https.get(serverName + '/alphabets/getchars/6', (res) => {
 			let rawData = '';
 			res.on('data', (chunk) => { rawData += chunk; });
 			res.on('end', () => {
@@ -35,6 +36,27 @@ server.route([{
 					reply(parsedData);
 				} catch (e) {
 					console.error(e.message);
+					reply('');
+				}
+			});
+		});
+	},
+},
+{
+	method: 'GET',
+	path: '/shuffle/{query}',
+	handler: (request, reply) => {
+		let params = request.params.query
+		https.get(serverName + '/alphabets/shuffle/' + params, (res) => {
+			let rawData = '';
+			res.on('data', (chunk) => { rawData += chunk; });
+			res.on('end', () => {
+				try {
+					const parsedData = JSON.parse(rawData);
+					reply(parsedData);
+				} catch (e) {
+					console.error(e.message);
+					reply('');
 				}
 			});
 		});
