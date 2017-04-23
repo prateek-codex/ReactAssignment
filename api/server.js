@@ -94,3 +94,19 @@ server.route({
         reply(leaderboard.GetLeaderBoard());
     }
 });
+
+
+server.route([{
+	method: Constants.HTTP_GET_METHOD,
+	path: Constants.API_ENDPOINT_LEADERBOARD,
+	handler: (request, reply) =>  {
+		reply(leaderboard.GetLeaderBoard())
+	}
+}]);
+
+server.start((err) => {
+	if (err) {
+		throw err;
+	}
+	console.log('Server running at:', server.info.uri);
+});
