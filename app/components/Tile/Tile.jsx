@@ -12,13 +12,13 @@ class Tile extends React.Component {
 			matched: false
 		};
 	}
-	
+
 	componentWillReceiveProps(nextProps) {
-		this.setState({ open: nextProps.openedCharList.indexOf(this.state.character) > -1 || (nextProps.currentChar === this.state.character && nextProps.openKey == this.props.tileKey) });  
+		this.setState({ open: nextProps.openedCharList.indexOf(this.state.character) > -1 || (nextProps.currentChar === this.state.character && nextProps.openKey == this.props.tileKey) });
 	}
 
 	getCharacter() {
-		fetch('https://10.127.128.56:8000/alphabets/get/' + this.props.apiDataId + '/1')
+		fetch('/api/getCharacter/' + this.props.apiDataId)
 			.then((response) => response.json())
 			.then((responseJson) => {
 				this.setState({character: responseJson.char});
