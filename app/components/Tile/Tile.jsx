@@ -7,6 +7,7 @@ class Tile extends React.Component {
 			open: false,
 			matched: false
 		};
+		this.handleClick = this.handleClick.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
 		this.setState({ open: nextProps.openedCharList.indexOf(this.state.character) > -1
@@ -46,7 +47,12 @@ class Tile extends React.Component {
 	}
 	render() {
 		return (
-			<div className={this.state.open ? "tile tile-open" : "tile tile-close"} onClick={this.handleClick.bind(this)}>
+			<div className={
+							 this.state.open
+							 ? "tile tile-open"
+							 : "tile tile-close"
+						    }
+				 onClick={this.handleClick}>
 				<span className="character">{this.state.character}</span>
 			</div>
 		);

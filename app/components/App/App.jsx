@@ -71,12 +71,12 @@ class App extends React.Component {
 			}
 		});
 		setTimeout(function () {
-			self.setState(function (state, props) {
+			this.setState(function (state, props) {
 				return {
 					gameState: Constants.GAME_STATE_STARTED
 				}
 			});
-		}, 100, this);
+		}.bind(this), 100);
 		this.initializeList();
 	}
 	handleNameChage(event) {

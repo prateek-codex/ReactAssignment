@@ -1,6 +1,9 @@
 import React from 'react';
 import Tile from '../Tile/Tile';
+import Constants from '../../Lib/Constants'
 require('./Board.css');
+
+
 class Board extends React.Component {
 	constructor(props) {
 		super(props);
@@ -13,7 +16,7 @@ class Board extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
 	}
 	shuffleBoard() {
-		fetch('/api/shuffle/' + this.props.apiDataId)
+		fetch(Constants.API_ENDPOINT_SHUFFLE + this.props.apiDataId)
 			.then((response) => response.json())
 			.then((responseJson) => {
 				this.setState({apiShuffleDataId: responseJson.id});
