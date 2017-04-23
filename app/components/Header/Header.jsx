@@ -1,25 +1,16 @@
-
 import React from 'react';
-
-require('./Header.css');
-
 class Header extends React.Component {
 	constructor(props) {
 		super(props);
-		
 		this.state = {
 			name: undefined
 		};
-
     	this.handleNameChage = this.handleNameChage.bind(this);
 	}
- 	
 	 handleNameChage(event) {
 		 this.props.nameChange(event);
   	}
-
 	render() {
-
 		return (
 			<div className="jumbotron">
 				<div className="col-md-12"><h1>Remember the Alphabet Game</h1></div>
@@ -49,5 +40,4 @@ class Header extends React.Component {
 		);
 	}
 }
-
 export default Header;
