@@ -4,6 +4,7 @@ require('./App.css');
 import Board from '../Board/Board';
 import WinDialog from '../WinDialog/WinDialog';
 import Header from '../Header/Header';
+import LeaderBoard from '../LeaderBoard/LeaderBoard';
 
 class App extends React.Component {
 	constructor(props) {
@@ -109,6 +110,7 @@ class App extends React.Component {
 					this.state.gameState === 'ended' &&
 					<WinDialog />
 				}
+				<LeaderBoard />
 			</div>
 		);
 	}
