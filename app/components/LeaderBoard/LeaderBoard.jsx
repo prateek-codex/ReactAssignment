@@ -26,9 +26,9 @@ class LeaderBoard extends React.Component {
 		}
 	}
 	render() {
-		var list = [];
+		let list = [], i;
 		if (this.state.leaderBoardList) {
-			for (var i = 0; i < this.state.leaderBoardList.length; i++) {
+			for (i = 0; i < this.state.leaderBoardList.length; i++) {
 				list.push(<tr><th>{this.state.leaderBoardList[i].SNo}</th><th>{this.state.leaderBoardList[i].Name}</th><th>{this.state.leaderBoardList[i].WinCount}</th></tr>);
 			}
 		}

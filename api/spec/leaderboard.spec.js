@@ -1,6 +1,6 @@
 describe("Leaderboard Tests", function () {
 
-	var leaderboard = require('../Leaderboard');
+	let leaderboard = require('../Leaderboard');
 	beforeEach(function () {
 		leaderboard.Data = [];
 	});
@@ -13,7 +13,7 @@ describe("Leaderboard Tests", function () {
 
 	it("should fetch values from leaderboard", function () {
 		leaderboard.UpdateLeaderBoard("Test");
-		var actualData = leaderboard.GetLeaderBoard()
+		let actualData = leaderboard.GetLeaderBoard()
 		expect(actualData.length).toBe(1);
 		expect(actualData[0].Name).toBe('Test');
 	});

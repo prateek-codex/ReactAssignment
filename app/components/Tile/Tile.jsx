@@ -27,25 +27,24 @@ class Tile extends React.Component {
 				console.error(error);
 			});
 
-		var open = this.props.openedCharList.indexOf(this.state.character) > -1;
+		let open = this.props.openedCharList.indexOf(this.state.character) > -1;
 		this.setState({ open: open });
 	}
 	componentDidMount() {
 		this.getCharacter();
 	}
 	handleClick(index) {
-		var state = !this.state.open;
+		let state = !this.state.open;
 		this.setState({ open: state });
 		this.setState({ clicked: state });
-		var self = this;
 		setTimeout(function () {
 			if (state) {
-				self.props.onClick(self.state.character, self.props.tileKey);
+				this.props.onClick(this.state.character, this.props.tileKey);
 			}
 			else {
-				self.props.onClick(null, null);
+				this.props.onClick(null, null);
 			}
-		}, 200);
+		}.bind(this), 200);
 	}
 	render() {
 		return (

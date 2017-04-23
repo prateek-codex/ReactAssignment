@@ -40,7 +40,7 @@ class Board extends React.Component {
 		else {
 			if (this.state.currentChar == char) {
 				// Matched, keep both open
-				var openedChars = this.state.openedCharList;
+				let openedChars = this.state.openedCharList;
 				openedChars.push(char);
 				this.setState(function (state, props) {
 					return {
@@ -59,11 +59,10 @@ class Board extends React.Component {
 		}
 	}
 	render() {
-		var tileRows = [];
-		var self = this;
-		for (var i = 0; i < this.props.dimensions.rows; i++) {
-			var tiles = [];
-			for (var j = 0; j < this.props.dimensions.columns; j++) {
+		let tileRows = [], tiles = [], i, j;
+		for (i = 0; i < this.props.dimensions.rows; i++) {
+			tiles = [];
+			for (j = 0; j < this.props.dimensions.columns; j++) {
 				tiles.push(<Tile tileKey={i + '' + j}
 					apiDataId={i == 0 ? this.state.apiDataId : this.state.apiShuffleDataId}
 					onClick={this.clickHandler}

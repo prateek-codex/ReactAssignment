@@ -83,7 +83,7 @@ class App extends React.Component {
 		this.setState({ name: event.target.value });
 	}
 	moveHandler() {
-		var moveCount = ++this.state.moves;
+		let moveCount = ++this.state.moves;
 		this.setState(function (state, props) {
 			return {
 				moves: moveCount
