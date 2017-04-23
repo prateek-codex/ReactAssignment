@@ -12,7 +12,7 @@ class App extends React.Component {
 		this.state = {
 			time: new Date(),
 			gameState: 'started',
-			moves:0
+			moves: 0
 		};
 
 		this.timer = null;
@@ -29,7 +29,7 @@ class App extends React.Component {
 
 				this.setState(function (state, props) {
 					return {
-					apiDataId: responseJson.id
+						apiDataId: responseJson.id
 					}
 				});
 			})
@@ -45,21 +45,21 @@ class App extends React.Component {
 	componentWillUnmount() {
 	}
 
-    gameWon() {
+	gameWon() {
 
 		this.setState(function (state, props) {
 			return {
 				gameState: 'ended'
 			}
 		});
-    }
+	}
 
 	newGameHandler() {
 		this.setState(function (state, props) {
-				return {
-					moves: 0
-				}
-			});
+			return {
+				moves: 0
+			}
+		});
 
 		this.setState(function (state, props) {
 			return {
@@ -69,13 +69,13 @@ class App extends React.Component {
 
 		var self = this;
 
-		setTimeout(function(){
+		setTimeout(function () {
 
 			self.setState(function (state, props) {
 				return {
 					gameState: 'started'
 				}
-				});
+			});
 		}, 100);
 
 		this.initializeList();
@@ -85,30 +85,30 @@ class App extends React.Component {
 
 		var moveCount = ++this.state.moves;
 		this.setState(function (state, props) {
-				return {
-					moves: moveCount
-				}
-			});
+			return {
+				moves: moveCount
+			}
+		});
 	}
 
 	render() {
 		return (
 			<div className="container">
-			<div><Header newGame = {this.newGameHandler} moves={this.state.moves}/> </div>
-			{
-				this.state.gameState === 'started' &&
-				<div>
-					{
-						this.state.apiDataId &&
-						<Board dimensions = {{rows: 2, columns: 6}} apiDataId = {this.state.apiDataId} onWin = {this.gameWon}
-						move = {this.moveHandler}/>
-					}
-				</div>
-			}
-			{
-				this.state.gameState === 'ended' &&
-				<WinDialog />
-			}
+				<div><Header newGame={this.newGameHandler} moves={this.state.moves} /> </div>
+				{
+					this.state.gameState === 'started' &&
+					<div>
+						{
+							this.state.apiDataId &&
+							<Board dimensions={{ rows: 2, columns: 6 }} apiDataId={this.state.apiDataId} onWin={this.gameWon}
+								move={this.moveHandler} />
+						}
+					</div>
+				}
+				{
+					this.state.gameState === 'ended' &&
+					<WinDialog />
+				}
 			</div>
 		);
 	}

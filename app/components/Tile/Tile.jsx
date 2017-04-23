@@ -40,14 +40,18 @@ class Tile extends React.Component {
 	  this.setState({open : state});
 	  this.setState({clicked : state});
 
-	  if(state) {
-	  	this.props.onClick(this.state.character, this.props.tileKey);
-	  }
-	  else
-	  {
-		  this.props.onClick(null, null);
-	  }
-  }
+		var self = this;
+
+		setTimeout(function() {
+			if(state) {
+				self.props.onClick(self.state.character, self.props.tileKey);
+			}
+			else
+			{
+				self.props.onClick(null, null);
+			}
+		}, 200);
+	}
 
 	render() {
 		return (
