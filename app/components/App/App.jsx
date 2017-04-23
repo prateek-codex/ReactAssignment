@@ -20,6 +20,7 @@ class App extends React.Component {
 		this.gameWon = this.gameWon.bind(this);
 		this.newGameHandler = this.newGameHandler.bind(this);
 		this.moveHandler = this.moveHandler.bind(this);
+    	this.handleNameChage = this.handleNameChage.bind(this);
 	}
 
 	initializeList() {
@@ -53,6 +54,25 @@ class App extends React.Component {
 				gameState: 'ended'
 			}
 		});
+
+		// Post Data here
+		fetch('/api/leaderboard', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				name: this.state.name
+				})
+			})
+			.then((response) => response.json())
+			.then((responseJson) => {
+				this.setState({leaderBoardList: responseJson});
+			})
+			.catch((error) => {
+				console.error(error);
+			});
 	}
 
 	newGameHandler() {
@@ -82,6 +102,10 @@ class App extends React.Component {
 		this.initializeList();
 	}
 
+	handleNameChage(event) {
+    	this.setState({name: event.target.value});
+  	}
+
 	moveHandler() {
 
 		var moveCount = ++this.state.moves;
@@ -95,7 +119,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="container">
-				<div><Header newGame={this.newGameHandler} moves={this.state.moves} /> </div>
+				<div><Header newGame={this.newGameHandler} moves={this.state.moves} nameChange= {this.handleNameChage} /> </div>
 				{
 					this.state.gameState === 'started' &&
 					<div>
@@ -110,7 +134,7 @@ class App extends React.Component {
 					this.state.gameState === 'ended' &&
 					<WinDialog />
 				}
-				<LeaderBoard />
+				<LeaderBoard leaderBoardList = {this.state.leaderBoardList} />
 			</div>
 		);
 	}
