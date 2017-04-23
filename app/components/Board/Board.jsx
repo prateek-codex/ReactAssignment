@@ -37,12 +37,13 @@ class Board extends React.Component {
 	componentDidMount() {
 	}
 
-    clickHandler(char) {
+    clickHandler(char, tileKey) {
 		
 		if(!this.state.currentChar) {
 			this.setState(function (state, props) {
 				return {
-					currentChar: char
+					currentChar: char,
+					openKey: tileKey
 				}
 			});
 		}
@@ -99,8 +100,8 @@ class Board extends React.Component {
 		for(var i=0; i<this.props.dimensions.rows; i++){
 			var tiles = [];
 			for(var j=0; j<this.props.dimensions.columns; j++) {
-				tiles.push(<Tile key={i + '' + j} apiDataId={i == 0 ? this.state.apiDataId : this.state.apiShuffleDataId} onClick = {this.clickHandler} openedCharList={this.state.openedCharList} 
-				currentChar={this.state.currentChar} 
+				tiles.push(<Tile tileKey={i + '' + j} apiDataId={i == 0 ? this.state.apiDataId : this.state.apiShuffleDataId} onClick = {this.clickHandler} openedCharList={this.state.openedCharList} 
+				currentChar={this.state.currentChar} openKey = {this.state.openKey} 
 				/>);
 			}
 			tileRows.push(tiles);	

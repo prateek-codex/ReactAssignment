@@ -9,14 +9,13 @@ class Tile extends React.Component {
 
 		this.state = {
 			open: false,
-			matched: false,
-			clicked: false
+			matched: false
 		};
 
 	}
 	
 	componentWillReceiveProps(nextProps) {
-		this.setState({ open: (nextProps.openedCharList.indexOf(this.state.character) > -1 || nextProps.currentChar === this.state.character) && this.state.clicked });  
+		this.setState({ open: nextProps.openedCharList.indexOf(this.state.character) > -1 || (nextProps.currentChar === this.state.character && nextProps.openKey == this.props.tileKey) });  
 	}
 
 	getCharacter() {
@@ -43,7 +42,11 @@ class Tile extends React.Component {
 	  this.setState({clicked : state});
 
 	  if(state) {
-	  	this.props.onClick(this.state.character);
+	  	this.props.onClick(this.state.character, this.props.tileKey);
+	  }
+	  else
+	  {
+		  this.props.onClick(null, null);
 	  }
   }
 
