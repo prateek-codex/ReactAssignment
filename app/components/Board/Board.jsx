@@ -18,7 +18,11 @@ class Board extends React.Component {
 		fetch(Constants.API_ENDPOINT_SHUFFLE + this.props.apiDataId)
 			.then((response) => response.json())
 			.then((responseJson) => {
-				this.setState({ apiShuffleDataId: responseJson.id });
+				this.setState(function (state, props) {
+					return {
+						apiShuffleDataId: responseJson.id,
+					}
+				});
 			})
 			.catch((error) => {
 				console.error(error);

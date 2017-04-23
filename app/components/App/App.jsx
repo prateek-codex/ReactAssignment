@@ -53,7 +53,11 @@ class App extends React.Component {
 		})
 			.then((response) => response.json())
 			.then((responseJson) => {
-				this.setState({ leaderBoardList: responseJson });
+				this.setState(function (state, props) {
+					return {
+						leaderBoardList: responseJson
+					}
+				});
 			})
 			.catch((error) => {
 				console.error(error);

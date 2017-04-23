@@ -11,32 +11,47 @@ class Tile extends React.Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
-		this.setState({
-			open: nextProps.openedCharList.indexOf(this.state.character) > -1
+		let isOpen = nextProps.openedCharList.indexOf(this.state.character) > -1
 			|| (nextProps.currentChar === this.state.character
-				&& nextProps.openKey == this.props.tileKey)
-		});
+				&& nextProps.openKey == this.props.tileKey);
+		this.setState(function (state, props) {
+				return {
+					open: isOpen
+				}
+			});
 	}
 	getCharacter() {
 		fetch('/api/getCharacter/' + this.props.apiDataId)
 			.then((response) => response.json())
 			.then((responseJson) => {
-				this.setState({ character: responseJson.char });
+				this.setState(function (state, props) {
+				return {
+					character: responseJson.char
+				}
+			});
 			})
 			.catch((error) => {
 				console.error(error);
 			});
 
 		let open = this.props.openedCharList.indexOf(this.state.character) > -1;
-		this.setState({ open: open });
+		this.setState(function (state, props) {
+				return {
+					open: open
+				}
+			});
 	}
 	componentDidMount() {
 		this.getCharacter();
 	}
 	handleClick(index) {
 		let state = !this.state.open;
-		this.setState({ open: state });
-		this.setState({ clicked: state });
+		this.setState(function (state, props) {
+				return {
+					open: state,
+					clicked: state
+				}
+			});
 		setTimeout(function () {
 			if (state) {
 				this.props.onClick(this.state.character, this.props.tileKey);

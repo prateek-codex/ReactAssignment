@@ -11,7 +11,11 @@ class LeaderBoard extends React.Component {
 		fetch(Constants.API_ENDPOINT_LEADERBOARD)
 			.then((response) => response.json())
 			.then((responseJson) => {
-				this.setState({ leaderBoardList: responseJson });
+				this.setState(function (state, props) {
+					return {
+						leaderBoardList: responseJson
+					}
+				});
 			})
 			.catch((error) => {
 				console.error(error);
@@ -22,7 +26,11 @@ class LeaderBoard extends React.Component {
 	}
 	componentWillReceiveProps(newProps) {
 		if (newProps.leaderBoardList && newProps.leaderBoardList.length) {
-			this.setState({ leaderBoardList: newProps.leaderBoardList });
+			this.setState(function (state, props) {
+				return {
+					leaderBoardList: newProps.leaderBoardList
+				}
+			});
 		}
 	}
 	render() {
