@@ -1,0 +1,23 @@
+.tile {
+	width: 150px;
+	height: 100px;
+	margin: 10px;
+	float: left;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 80px;
+	background-color: white;
+}
+
+.tile-close {
+	background: salmon;
+}
+
+.tile-open {
+	background: lightgreen;
+}
+
+.tile-close span {
+	visibility: hidden;
+}
+
