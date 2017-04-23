@@ -31,5 +31,4 @@ Core Logic
 
 Incomplete Items
     1. REDUX pattern
-    2. Constants file
-	3. Swagger implementation
+	2. Swagger implementation
